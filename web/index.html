@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<!--
+SPDX-FileCopyrightText: 2021 codedust
+
+SPDX-License-Identifier: EUPL-1.2
+-->
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LeiKa-Tool</title>
+  <link rel="stylesheet" href="bulma.min.css">
+  <link rel="stylesheet" href="leika.css">
+</head>
+<body>
+  <section class="section">
+    <div class="container">
+      <h1 class="title">LeiKa-Suche</h1>
+      <p class="subtitle">
+        Im <strong>LeiKa</strong> suchen...
+      </p>
+      <input id="search-input" class="input is-primary" type="text" placeholder="Im LeiKa suchen..." autofocus>
+      <p class="has-text-weight-light">Ergebnisse: <span id="numResults">-</span></p>
+    </div>
+  </section>
+  <section class="section results"></section>
+  <section class="section load-more has-text-centered">
+    <a href="#" id="a-load-more"></a>
+  </section>
+  <script id="template-leistung" type="x-tmpl-mustache">
+    <div class="container leistung">
+      <p><strong>{{ Bezeichnung }}</strong> ({{ Schluessel }}) -- <i>Typ {{ Typ }}</i></p>
+      <div class="level"><div class="level-left">
+        <span class="level-item"><i>Leistungsgruppierung</i>: {{ Leistungsgruppierung }}</span>
+        <span class="level-item"><i>Veröffentlichungsdatum</i>: {{ Veröffentlichungsdatum }}</span>
+      </div></div>
+      <table class="leistungs-attributes is-hidden">
+        <tr><td>Bezeichnung2</td><td>{{Bezeichnung2}}</td></tr>
+        <tr><td>Leistungskennung</td><td>{{Leistungskennung}}</td></tr>
+        <tr><td>Verrichtung</td><td>{{Verrichtung}}</td></tr>
+        <tr><td>Verrichtungsdetail</td><td>{{Verrichtungsdetail}}</td></tr>
+        <tr><td>Besondere Merkmale</td><td>{{Besondere Merkmale}}</td></tr>
+        <tr><td>Synonyme</td><td>{{Synonyme}}</td></tr>
+      </table>
+    </div>
+  </script>
+  <script type="text/javascript" src="papaparse.js"></script>
+  <script src="mustache.js"></script>
+  <script type="text/javascript" src="leika.js"></script>
+</body>
+</html>

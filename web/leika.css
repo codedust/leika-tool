@@ -1,0 +1,45 @@
+/*
+ * SPDX-FileCopyrightText: 2021 codedust
+ *
+ * SPDX-License-Identifier: EUPL-1.2
+ */
+
+.results {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+section.load-more {
+  padding-top: 1em;
+  padding-bottom: 5rem;
+}
+
+.leistung {
+  margin-top: .5rem;
+  border: 1px solid transparent;
+  padding: .5em;
+  border-radius: .5em;
+  cursor: pointer;
+}
+
+.leistung:hover {
+  border: 1px solid #eaeaea;
+}
+
+.leistung .level {
+  margin-bottom: 0;
+}
+
+.leistungs-attributes {
+  cursor: default;
+  margin-top: 1rem;
+  background: #eaeaea;
+  width: 100%;
+  border-radius: .25em;
+}
+
+.leistungs-attributes tr td:first-child {
+  color: #666;
+  text-align: right;
+  padding-right: .5em;
+}
