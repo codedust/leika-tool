@@ -6,6 +6,27 @@ var leika = [];
 let offset = 0;
 const PAGE_SIZE = 30;
 
+const TYPE_EXPLANATIONS = {
+	"1": "Regelungs- und Vollzugskompetenz auf Bundesebene",
+	"2": "Regelungskompetenz auf Bundesebene, Vollzug durch Landes- oder kommunale Ebene",
+	"2a": "Regelungskompetenz auf Bundesebene, Vollzug durch Landesebene",
+	"2b": "Regelungskompetenz auf Bundesebene, Ausführungsvorschriften durch Landesebene, Vollzug durch kommunale Ebene",
+	"3": "Regelungskompetenz auf Bundesebene (Abweichungsrecht bzw. ehemals Rahmengesetzgebung), Vollzug auf Landes- oder kommunaler Ebene",
+	"3a": "Regelungskompetenz auf Bundesebene (Abweichungsrecht bzw. ehemals Rahmengesetzgebung), Vollzug durch Landesebene",
+	"3b": "Regelungskompetenz auf Bundesebene (Abweichungsrecht bzw. ehemals Rahmengesetzgebung), Ausführungsvorschriften durch Landesebene, Vollzug durch kommunale Ebene",
+	"2/3": "Regelungskompetenz auf Bundesebene, Vollzug durch Landes- oder kommunale Ebene",
+	"1;2/3": "Regelungskompetenz auf Bundesebene, Vollzug durch Bundes, Landes- oder kommunale Ebene",
+	"4": "Regelungskompetenz auf Landesebene",
+	"4a": "Regelungskompetenz und Vollzug auf Landesebene",
+	"4b": "Regelungskompetenz auf Landesebene, Vollzug durch kommunale Ebene",
+	"5": "Regelungskompetenz auf kommunaler Ebene",
+	"6": "allgemeine Hinweise mit informativem Charakter, die nicht eine bestimmte Leistungserbringung betreffen",
+	"7": "Service-und Sonderrufnummern mit Informationsbedarf in der Bevölkerung",
+	"10": "Verwaltungsinterne Leistung",
+	"11": "Informationen zu SDG - allgemeine Rechte und Pflichten",
+	"12": "Informationen zu SDG - Hilfs- und Problemlösungsdienste"
+}
+
 let elSearchInput = document.getElementById('search-input');
 let elLoadMore = document.getElementById('a-load-more');
 let elResultsSection = document.querySelector('.results');
@@ -27,12 +48,20 @@ Papa.parse("leika.csv", {
 	complete: function(results) {
 		leika = results.data;
 
-		// parse dates
 		leika.map((leistung, i) => {
+			// parse dates
 			try {
 				leistung['date'] = parseJSDateFromStr(leistung['Veröffentlichungsdatum']);
 			} catch (e) {
 				console.error(e);
+			}
+
+			// add typeExplanation
+			if (leistung['Typ'] in TYPE_EXPLANATIONS) {
+				leistung['typeExplanation'] = TYPE_EXPLANATIONS[leistung['Typ']];
+			} else if (leistung['Typ'] !== ''){
+				console.error("unbekannter Leistungtyp", leistung['Typ'], leistung, i);
+				leistung['typeExplanation'] = 'unbekannter Leistungtyp';
 			}
 		});
 
@@ -46,6 +75,7 @@ Papa.parse("leika.csv", {
 // update results
 function showResults(query, offset) {
 	let leikaFiltered = leika.filter(item => item.Schluessel.indexOf(query) !== -1 || item['Bezeichnung'].toLowerCase().indexOf(query.toLowerCase()) !== -1);
+	if (query != "") leikaFiltered.sort((a,b) => a.Schluessel > b.Schluessel);
 
 	// show number of results
 	elNumResults.innerText = leikaFiltered.length;
