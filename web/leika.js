@@ -45,7 +45,6 @@ function parseJSDateFromStr(dateTimeStr) {
 function renderAsTags(str) {
 	if (str == '') return '';
 	let tagsStr = str.split('|');
-	console.log(tagsStr);
 	let outputHTML = '';
 	for (tagStr of tagsStr) {
 		outputHTML += Mustache.render(templateTag, tagStr);
@@ -80,6 +79,13 @@ Papa.parse("leika.csv", {
 			// add renderAsTags function
 			leistung['SynonymeAsTags'] = function() { return renderAsTags(leistung['Synonyme']); }
 			leistung['BesondereMerkmaleAsTags'] = function() { return renderAsTags(leistung['Besondere Merkmale']); }
+
+			// add searchString
+			let searchString = 'typ ' + leistung['Typ'] + '|';
+			for (key in leistung) {
+				if (typeof(leistung[key]) == "string") searchString += leistung[key].toLowerCase() + '|';
+			}
+			leistung['searchString'] = searchString;
 		});
 
 		// sort leika bei date
@@ -91,7 +97,8 @@ Papa.parse("leika.csv", {
 
 // update results
 function showResults(query, offset) {
-	let leikaFiltered = leika.filter(item => item.Schluessel.indexOf(query) !== -1 || item['Bezeichnung'].toLowerCase().indexOf(query.toLowerCase()) !== -1);
+	const queryLower = query.toLowerCase()
+	let leikaFiltered = leika.filter(item => item['searchString'].indexOf(queryLower) !== -1);
 	if (query != "") leikaFiltered.sort((a,b) => a.Schluessel > b.Schluessel);
 
 	// show number of results
