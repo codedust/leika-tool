@@ -31,13 +31,13 @@ SPDX-License-Identifier: EUPL-1.2
   </section>
   <script id="template-leistung" type="x-tmpl-mustache">
     <div class="container leistung">
-      <p><strong>{{ Bezeichnung }}</strong> ({{ Schluessel }}) -- <i>Typ {{ Typ }}</i></p>
-      <div class="level"><div class="level-left">
-        <span class="level-item"><i>Leistungsgruppierung</i>: {{ Leistungsgruppierung }}</span>
-        <span class="level-item"><i>Veröffentlichungsdatum</i>: {{ Veröffentlichungsdatum }}</span>
-      </div></div>
+      <p><strong>{{ Bezeichnung }}</strong> ({{ Schluessel }})</p>
+      <span class="tag is-light">{{#Typ}}Typ {{ Typ }}{{/Typ}}{{^Typ}}kein Leistungstyp angegeben{{/Typ}}</span>
+      <span class="tag is-light">Leistungsgruppierung:&nbsp;<i>{{ Leistungsgruppierung }}</i></span>
+      <span class="tag is-light">Veröffentlichungsdatum:&nbsp;<i>{{ Veröffentlichungsdatum }}</i></span>
       <table class="leistungs-attributes is-hidden">
         <tr><td>Bezeichnung2</td><td>{{Bezeichnung2}}</td></tr>
+        <tr><td>Typ</td><td>{{#Typ}}{{ Typ }} ({{ typeExplanation }}){{/Typ}}{{^Typ}}{{/Typ}}</td></tr>
         <tr><td>Leistungskennung</td><td>{{Leistungskennung}}</td></tr>
         <tr><td>Verrichtung</td><td>{{Verrichtung}}</td></tr>
         <tr><td>Verrichtungsdetail</td><td>{{Verrichtungsdetail}}</td></tr>

@@ -16,14 +16,19 @@ section.load-more {
 
 .leistung {
   margin-top: .5rem;
-  border: 1px solid transparent;
+  border: 1px solid #f5f5f5;
   padding: .5em;
   border-radius: .5em;
   cursor: pointer;
 }
 
 .leistung:hover {
-  border: 1px solid #eaeaea;
+  border: 1px solid #dadada;
+}
+
+.leistung .tag.is-normal {
+  vertical-align: text-top;
+  height: 1.9em;
 }
 
 .leistung .level {
@@ -31,6 +36,7 @@ section.load-more {
 }
 
 .leistungs-attributes {
+  max-width: 100%;
   cursor: default;
   margin-top: 1rem;
   background: #eaeaea;
@@ -38,7 +44,12 @@ section.load-more {
   border-radius: .25em;
 }
 
+.leistungs-attributes tr td {
+  word-break: break-word;
+}
+
 .leistungs-attributes tr td:first-child {
+  word-break: unset;
   color: #666;
   text-align: right;
   padding-right: .5em;
