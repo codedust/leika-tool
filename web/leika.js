@@ -45,7 +45,6 @@ Papa.parse("leika.csv", {
 
 // update results
 function showResults(query, offset) {
-	console.log(leika[0]);
 	let leikaFiltered = leika.filter(item => item.Schluessel.indexOf(query) !== -1 || item['Bezeichnung'].toLowerCase().indexOf(query.toLowerCase()) !== -1);
 
 	// show number of results
@@ -66,9 +65,10 @@ function showResults(query, offset) {
 	}
 
 	// update 'load more' link
-	if (leikaFiltered.length - offset > 0) {
+	const items_remaining = leikaFiltered.length - (offset + PAGE_SIZE);
+	if (items_remaining > 0) {
 		elLoadMore.classList.remove('is-hidden');
-		elLoadMore.innerText = "Mehr laden (" + Math.min(PAGE_SIZE, leikaFiltered.length - offset) + " von " + (leikaFiltered.length - offset) + " weiteren)";
+		elLoadMore.innerText = "Mehr laden (" + Math.min(PAGE_SIZE, items_remaining) + " von " + items_remaining + " weiteren)";
 	} else {
 		elLoadMore.classList.add('is-hidden');
 	}
