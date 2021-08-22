@@ -31,6 +31,8 @@ let elSearchInput = document.getElementById('search-input');
 let elLoadMore = document.getElementById('a-load-more');
 let elResultsSection = document.querySelector('.results');
 let elNumResults = document.getElementById('numResults');
+let templateLeistung = document.getElementById('template-leistung').innerHTML;
+let templateTag = document.getElementById('template-tag').innerHTML;
 
 // parse JS date from datetime string (format: DD.MM.YYYY hh:mm)
 function parseJSDateFromStr(dateTimeStr) {
@@ -38,6 +40,17 @@ function parseJSDateFromStr(dateTimeStr) {
 	let dateArr = dateStr.split('.');
 	let timeArr = timeStr.split(':');
 	return new Date(dateArr[2], dateArr[1]-1, dateArr[0], timeArr[0], timeArr[1]);
+}
+
+function renderAsTags(str) {
+	if (str == '') return '';
+	let tagsStr = str.split('|');
+	console.log(tagsStr);
+	let outputHTML = '';
+	for (tagStr of tagsStr) {
+		outputHTML += Mustache.render(templateTag, tagStr);
+	}
+	return outputHTML;
 }
 
 // load LeiKa
@@ -63,6 +76,10 @@ Papa.parse("leika.csv", {
 				console.error("unbekannter Leistungtyp", leistung['Typ'], leistung, i);
 				leistung['typeExplanation'] = 'unbekannter Leistungtyp';
 			}
+
+			// add renderAsTags function
+			leistung['SynonymeAsTags'] = function() { return renderAsTags(leistung['Synonyme']); }
+			leistung['BesondereMerkmaleAsTags'] = function() { return renderAsTags(leistung['Besondere Merkmale']); }
 		});
 
 		// sort leika bei date
@@ -88,7 +105,6 @@ function showResults(query, offset) {
 	// render results
 	for (var i = offset; i < offset + PAGE_SIZE; i++) {
 		if (leikaFiltered[i] != undefined) {
-			let templateLeistung = document.getElementById('template-leistung').innerHTML;
 			var rendered = Mustache.render(templateLeistung, leikaFiltered[i]);
 			elResultsSection.innerHTML += rendered;
 		}

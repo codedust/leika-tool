@@ -46,11 +46,19 @@ section.load-more {
 
 .leistungs-attributes tr td {
   word-break: break-word;
+  padding: .3em;
+}
+
+.leistungs-attributes tr:first-child td {
+  padding-top: .7em;
+}
+
+.leistungs-attributes tr:last-child td {
+  padding-bottom: .7em;
 }
 
 .leistungs-attributes tr td:first-child {
   word-break: unset;
   color: #666;
   text-align: right;
-  padding-right: .5em;
 }

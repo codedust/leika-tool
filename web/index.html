@@ -41,10 +41,13 @@ SPDX-License-Identifier: EUPL-1.2
         <tr><td>Leistungskennung</td><td>{{Leistungskennung}}</td></tr>
         <tr><td>Verrichtung</td><td>{{Verrichtung}}</td></tr>
         <tr><td>Verrichtungsdetail</td><td>{{Verrichtungsdetail}}</td></tr>
-        <tr><td>Besondere Merkmale</td><td>{{Besondere Merkmale}}</td></tr>
-        <tr><td>Synonyme</td><td>{{Synonyme}}</td></tr>
+        <tr><td>Besondere Merkmale</td><td>{{{BesondereMerkmaleAsTags}}}</td></tr>
+        <tr><td>Synonyme</td><td>{{{SynonymeAsTags}}}</td></tr>
       </table>
     </div>
+  </script>
+  <script id="template-tag" type="x-tmpl-mustache">
+    <span class="tag is-light">{{.}}</span>
   </script>
   <script type="text/javascript" src="papaparse.js"></script>
   <script src="mustache.js"></script>
