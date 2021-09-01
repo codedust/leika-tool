@@ -44,12 +44,7 @@ function parseJSDateFromStr(dateTimeStr) {
 
 function renderAsTags(str) {
 	if (str == '') return '';
-	let tagsStr = str.split('|');
-	let outputHTML = '';
-	for (tagStr of tagsStr) {
-		outputHTML += Mustache.render(templateTag, tagStr);
-	}
-	return outputHTML;
+	return Mustache.render(templateTag, str.split('|'));
 }
 
 // load LeiKa
