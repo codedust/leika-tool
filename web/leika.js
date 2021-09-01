@@ -91,6 +91,12 @@ Papa.parse("leika.csv", {
 		// sort leika bei date
 		leika.sort((a,b) => a.date < b.date);
 
+		// get query from location.hash
+		if (location.hash) {
+			elSearchInput.value = location.hash.substr(1);
+		}
+
+		// show results
 		showResults(elSearchInput.value, offset);
 	}
 });
@@ -131,6 +137,7 @@ function showResults(query, offset) {
 elSearchInput.addEventListener('keyup', function() {
 	offset = 0;
 	showResults(elSearchInput.value, offset);
+	location.hash = elSearchInput.value;
 });
 
 // result click event (show/hide table)
