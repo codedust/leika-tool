@@ -30,6 +30,7 @@ SPDX-License-Identifier: EUPL-1.2
     <a href="#" id="a-load-more"></a>
   </section>
   <script id="template-leistung" type="x-tmpl-mustache">
+    {{#.}}
     <div class="container leistung">
       <p><strong>{{ Bezeichnung }}</strong> ({{ Schluessel }})</p>
       <span class="tag is-light">{{#Typ}}Typ {{ Typ }}{{/Typ}}{{^Typ}}kein Leistungstyp angegeben{{/Typ}}</span>
@@ -47,6 +48,7 @@ SPDX-License-Identifier: EUPL-1.2
         <tr><td>Links</td><td><a href="https://fimportal.de/detail/L/{{Schluessel}}">Leistung im FIM-Portal</a></td></tr>
       </table>
     </div>
+    {{/.}}
   </script>
   <script id="template-tag" type="x-tmpl-mustache">
     <span class="tag is-light">{{.}}</span>

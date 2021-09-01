@@ -68,6 +68,9 @@ Papa.parse("leika.csv", {
 				console.error(e);
 			}
 
+			// parse Schluessel
+			leistung['leika-key'] = parseInt(leistung['Schluessel']);
+
 			// add typeExplanation
 			if (leistung['Typ'] in TYPE_EXPLANATIONS) {
 				leistung['typeExplanation'] = TYPE_EXPLANATIONS[leistung['Typ']];
@@ -106,7 +109,7 @@ Papa.parse("leika.csv", {
 function showResults(query, offset) {
 	const queryLower = query.toLowerCase();
 	let leikaFiltered = leika.filter(item => item['searchString'].indexOf(queryLower) !== -1);
-	if (query != "") leikaFiltered.sort((a,b) => a.Schluessel > b.Schluessel);
+	if (query != "") leikaFiltered.sort((a,b) => a['leika-key'] > b['leika-key']);
 
 	// show number of results
 	elNumResults.innerText = leikaFiltered.length;
@@ -117,12 +120,8 @@ function showResults(query, offset) {
 	}
 
 	// render results
-	for (var i = offset; i < offset + PAGE_SIZE; i++) {
-		if (leikaFiltered[i] != undefined) {
-			var rendered = Mustache.render(templateLeistung, leikaFiltered[i]);
-			elResultsSection.innerHTML += rendered;
-		}
-	}
+	var rendered = Mustache.render(templateLeistung, leikaFiltered.slice(offset, offset + PAGE_SIZE));
+	elResultsSection.innerHTML += rendered;
 
 	// update 'load more' link
 	const items_remaining = leikaFiltered.length - (offset + PAGE_SIZE);
