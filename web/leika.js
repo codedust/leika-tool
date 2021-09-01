@@ -140,6 +140,16 @@ document.querySelector('.results').addEventListener('click', function(e) {
 	let el = e.target;
 	// traverse up the document tree
 	while (el.parentElement) {
+		// update location.href and search on leika urn link click
+		if (el.className.split(' ').indexOf('leika-urn') !== -1) {
+			e.preventDefault();
+			location.hash = el.innerText;
+			elSearchInput.value = location.hash.substr(1);
+			offset = 0;
+			showResults(elSearchInput.value, offset);
+			return;
+		}
+
 		// do not fire click event on attributes table
 		if (el.className.split(' ').indexOf('leistungs-attributes') !== -1) return;
 
