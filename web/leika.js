@@ -81,7 +81,8 @@ Papa.parse("leika.csv", {
 			leistung['BesondereMerkmaleAsTags'] = function() { return renderAsTags(leistung['Besondere Merkmale']); }
 
 			// add searchString
-			let searchString = 'typ ' + leistung['Typ'] + '|';
+			let searchString = 'typ ' + leistung['Typ'] + '|'; // allow search by "Typ 1" etc.
+			searchString += 'urn:de:fim:leika:leistung:' + leistung['Schluessel'] + '|'; // allow search by urn
 			for (key in leistung) {
 				if (typeof(leistung[key]) == "string") searchString += leistung[key].toLowerCase() + '|';
 			}
@@ -103,7 +104,7 @@ Papa.parse("leika.csv", {
 
 // update results
 function showResults(query, offset) {
-	const queryLower = query.toLowerCase()
+	const queryLower = query.toLowerCase();
 	let leikaFiltered = leika.filter(item => item['searchString'].indexOf(queryLower) !== -1);
 	if (query != "") leikaFiltered.sort((a,b) => a.Schluessel > b.Schluessel);
 
