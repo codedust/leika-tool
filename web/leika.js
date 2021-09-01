@@ -75,16 +75,16 @@ Papa.parse("leika.csv", {
 			}
 
 			// add renderAsTags function
-			leistung['SynonymeAsTags'] = function() { return renderAsTags(leistung['Synonyme']); }
-			leistung['BesondereMerkmaleAsTags'] = function() { return renderAsTags(leistung['Besondere Merkmale']); }
+			leistung['SynonymeAsTags'] = () => { return renderAsTags(leistung['Synonyme']); }
+			leistung['BesondereMerkmaleAsTags'] = () => { return renderAsTags(leistung['Besondere Merkmale']); }
 
 			// add searchString
 			let searchString = 'typ ' + leistung['Typ'] + '|'; // allow search by "Typ 1" etc.
 			searchString += 'urn:de:fim:leika:leistung:' + leistung['Schluessel'] + '|'; // allow search by urn
 			for (key in leistung) {
-				if (typeof(leistung[key]) == "string") searchString += leistung[key].toLowerCase() + '|';
+				if (typeof(leistung[key]) == "string") searchString += leistung[key] + '|';
 			}
-			leistung['searchString'] = searchString;
+			leistung['searchString'] = searchString.toLowerCase();
 		});
 
 		// sort leika bei date
