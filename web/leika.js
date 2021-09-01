@@ -92,7 +92,7 @@ Papa.parse("leika.csv", {
 
 		// get query from location.hash
 		if (location.hash) {
-			elSearchInput.value = location.hash.substr(1);
+			elSearchInput.value = decodeURIComponent(location.hash.substr(1));
 		}
 
 		// show results
