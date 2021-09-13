@@ -5,6 +5,7 @@
 var leika = [];
 let offset = 0;
 const PAGE_SIZE = 30;
+const LEIKA_URN_PREFIX = 'urn:de:fim:leika:leistung:';
 
 const TYPE_EXPLANATIONS = {
 	"1": "Regelungs- und Vollzugskompetenz auf Bundesebene",
@@ -80,7 +81,7 @@ Papa.parse("leika.csv", {
 
 			// add searchString
 			let searchString = 'typ ' + leistung['Typ'] + '|'; // allow search by "Typ 1" etc.
-			searchString += 'urn:de:fim:leika:leistung:' + leistung['Schluessel'] + '|'; // allow search by urn
+			searchString += LEIKA_URN_PREFIX + leistung['Schluessel'] + '|'; // allow search by urn
 			for (key in leistung) {
 				if (typeof(leistung[key]) == "string") searchString += leistung[key] + '|';
 			}
@@ -96,12 +97,12 @@ Papa.parse("leika.csv", {
 		}
 
 		// show results
-		showResults(elSearchInput.value, offset);
+		showResults(elSearchInput.value, offset, true);
 	}
 });
 
 // update results
-function showResults(query, offset) {
+function showResults(query, offset, autoExpand) {
 	const queryLower = query.toLowerCase();
 	let leikaFiltered = leika.filter(item => item['searchString'].indexOf(queryLower) !== -1);
 	if (query != "") leikaFiltered.sort((a,b) => a['leika-key'] > b['leika-key']);
@@ -118,6 +119,12 @@ function showResults(query, offset) {
 	var rendered = Mustache.render(templateLeistung, leikaFiltered.slice(offset, offset + PAGE_SIZE));
 	elResultsSection.innerHTML += rendered;
 
+	// auto-expand (show) leistungs-attributes table if only one result is found
+	// and the update is not triggered by search input element update
+	if (autoExpand && leikaFiltered.length == 1) {
+		elResultsSection.querySelector('.leistungs-attributes').classList.remove('is-hidden');
+	}
+
 	// update 'load more' link
 	const items_remaining = leikaFiltered.length - (offset + PAGE_SIZE);
 	if (items_remaining > 0) {
@@ -131,7 +138,7 @@ function showResults(query, offset) {
 // search input event
 elSearchInput.addEventListener('keyup', function() {
 	offset = 0;
-	showResults(elSearchInput.value, offset);
+	showResults(elSearchInput.value, offset, false);
 	location.hash = elSearchInput.value;
 });
 
@@ -146,7 +153,7 @@ document.querySelector('.results').addEventListener('click', function(e) {
 			location.hash = el.innerText;
 			elSearchInput.value = location.hash.substr(1);
 			offset = 0;
-			showResults(elSearchInput.value, offset);
+			showResults(elSearchInput.value, offset, true);
 			return;
 		}
 
@@ -167,5 +174,5 @@ document.querySelector('.results').addEventListener('click', function(e) {
 elLoadMore.addEventListener('click', function(e) {
 	e.preventDefault();
 	offset += PAGE_SIZE;
-	showResults(elSearchInput.value, offset);
+	showResults(elSearchInput.value, offset, false);
 });
