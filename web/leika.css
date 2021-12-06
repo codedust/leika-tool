@@ -4,9 +4,10 @@
  * SPDX-License-Identifier: EUPL-1.2
  */
 
-.results {
+section.results {
   padding-top: 0;
   padding-bottom: 0;
+  min-height: 60vh;
 }
 
 section.load-more {
@@ -61,4 +62,12 @@ section.load-more {
   word-break: unset;
   color: #666;
   text-align: right;
+}
+
+section.footer {
+  padding: 1em;
+}
+
+section.footer a:hover {
+  color: #485fc7;
 }
