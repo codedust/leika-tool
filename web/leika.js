@@ -88,7 +88,7 @@ Papa.parse("leika.csv", {
 			leistung['searchString'] = searchString.toLowerCase();
 		});
 
-		// sort leika bei date
+		// sort leika by date
 		leika.sort((a,b) => a.date < b.date);
 
 		// get query from location.hash
