@@ -4,7 +4,7 @@ SPDX-FileCopyrightText: 2021 codedust
 SPDX-License-Identifier: EUPL-1.2
 -->
 
-# Leika-Tool
+# LeiKa-Tool
 
 Simple tool to explore the [LeiKa](https://de.wikipedia.org/wiki/LeiKa).
 A live version of this tool can be found [here](https://www.opengovtech.de/leika/).
